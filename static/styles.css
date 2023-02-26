@@ -1,0 +1,30 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.box {
+    height: 40px;
+    font-size:14pt;
+}
+
+.header{
+    text-align: center;
+}
+
+/* Colors for brand */
+
+nav .navbar-brand .red
+{
+    color: #A41034;
+}
+nav .navbar-brand .black
+{
+    color: #000000;
+}
+nav .navbar-brand .gray
+{
+    color: #808285;
+}

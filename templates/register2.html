@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <h3 style="font-size: 45px;">Register</h3> <br>
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="Birthday" name="Birthday" placeholder="Birthday" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="LastName" name="LastName" placeholder="Last name" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="Passport" name="Passport" placeholder="Passport" type="integer">
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <br><br>
+        <h6>Do you have an acoount?</h6>
+        <a class="nav-link" href="/login">Login</a>
+    </form>
+{% endblock %}
