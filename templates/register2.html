@@ -5,20 +5,30 @@
 {% endblock %}
 
 {% block main %}
-    <h3 style="font-size: 45px;">Register</h3> <br>
-    <form action="/register" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="Birthday" name="Birthday" placeholder="Birthday" type="text">
+    <form action="/register2" method="post">
+        <h1>Register:</h1><br>
+        
+        
+        <div class="tab">
+            <p><input id="email" name="email" placeholder="E-mail..." type="text"></p>
+            <p><input id="phone" name="phone" placeholder="Phone..." type="integer"></p>
+            <p><input id="day" name="day" placeholder="dd"   type="integer"></p>
+            <p><input id="month" name="month" placeholder="mm"  type="integer"></p>
+            <p><input id="year" name="year" placeholder="yyyy" type="integer"></p>
         </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="LastName" name="LastName" placeholder="Last name" type="text">
+
+        <div class="tab">
+            <p><input type="integer" id="password" name="password" placeholder="Password..." ></p>
+            <p><input type="integer" id="confirmation" name="confirmation" placeholder="Password Confirmation"></p>
         </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="Passport" name="Passport" placeholder="Passport" type="integer">
-        </div>
-        <button class="btn btn-primary" type="submit">Continue</button>
+        
+        <button type="submit" class="btn success">Next</button>
+        
+
         <br><br>
         <h6>Do you have an acoount?</h6>
         <a class="nav-link" href="/login">Login</a>
     </form>
+
+
 {% endblock %}
