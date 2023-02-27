@@ -94,7 +94,7 @@ def register():
             return apology("invalid username and/or password", 403)
 
         # Redirect user to home page
-        return redirect("/register2")
+        return redirect("/homepage")
 
     else:
         return render_template("register1.html")
