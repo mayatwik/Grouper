@@ -75,12 +75,37 @@ def login():
 def register():
     if request.method == "POST":
 
-    
+        # Ensure username was submitted
+        if not request.form.get("firstname"):
+            return apology("must provide", 403)
+
+        # Ensure password was submitted
+        elif not request.form.get("lastname"):
+            return apology("must provide Last Name", 403)
+
+        elif not request.form.get("Passport"):
+            return apology("must provide Passport", 403)
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE Passport = ?", request.form.get("Passport"))
+
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not rows[0]["FirstName"] == request.form.get("FirstName")  or not rows[0]["LastName"] == request.form.get("LastName"):
+            return apology("invalid username and/or password", 403)
+
         # Redirect user to home page
         return redirect("/homepage")
 
     else:
         return render_template("register1.html")
+
+@app.route("/register2", methods=["GET", "POST"])
+def register2():
+    return apology("todo")
+
+@app.route("/register3", methods=["GET", "POST"])
+def register3():
+    return apology("todo")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register2" method="post">
+        <h1>Register:</h1><br>
+        
+        <div class="tab">
+            <p><input type="integer" id="password" name="password" placeholder="Password..." ></p>
+            <p><input type="integer" id="confirmation" name="confirmation" placeholder="Password Confirmation"></p>
+        </div>
+        
+        <button type="submit" class="btn success">Next</button>
+        
+
+        <br><br>
+        <h6>Do you have an acoount?</h6>
+        <a class="nav-link" href="/login">Login</a>
+    </form>
+
+
+{% endblock %}
