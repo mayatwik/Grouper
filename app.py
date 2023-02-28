@@ -77,24 +77,25 @@ def register():
 
         # Ensure username was submitted
         if not request.form.get("firstname"):
-            return apology("must provide", 403)
+            return apology("must provide first name", 403)
 
+    
         # Ensure password was submitted
         elif not request.form.get("lastname"):
             return apology("must provide Last Name", 403)
 
-        elif not request.form.get("Passport"):
+        elif not request.form.get("passport"):
             return apology("must provide Passport", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE Passport = ?", request.form.get("Passport"))
+        rows = db.execute("SELECT * FROM passports WHERE passport = ?", request.form.get("passport"))
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not rows[0]["FirstName"] == request.form.get("FirstName")  or not rows[0]["LastName"] == request.form.get("LastName"):
-            return apology("invalid username and/or password", 403)
+        if len(rows) != 1 or not rows[0]["first_name"] == request.form.get("firstname")  or not rows[0]["last_name"] == request.form.get("lastname"):
+            return apology("invalid name and/or passport", 403)
 
         # Redirect user to home page
-        return redirect("/homepage")
+        return redirect("/register2")
 
     else:
         return render_template("register1.html")
