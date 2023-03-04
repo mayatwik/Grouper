@@ -5,21 +5,17 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/register2" method="post">
-        <h1>Register:</h1><br>
-        
-        <div class="tab">
-            <p><input type="integer" id="password" name="password" placeholder="Password..." ></p>
-            <p><input type="integer" id="confirmation" name="confirmation" placeholder="Password Confirmation"></p>
-        </div>
-        
-        <button type="submit" class="btn success">Next</button>
-        
+        <form action="/register3" method="post" enctype="multipart/form-data">
+            <h1>Profile Photo:</h1><br>
+                <div class="mb-3">
+                    <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="file" name="file" type="file" required>
+                </div>
+    
+                <button class="btn btn-primary" type="submit">Next</button>
+            
+    
+        </form>
 
-        <br><br>
-        <h6>Do you have an acoount?</h6>
-        <a class="nav-link" href="/login">Login</a>
-    </form>
 
 
 {% endblock %}

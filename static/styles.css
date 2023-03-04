@@ -14,6 +14,10 @@ nav .navbar-brand
     text-align: center;
 }
 
+#birthday {
+    height: 38px;
+    font-size:14pt;
+}
 /* Colors for brand */
 
 nav .navbar-brand .red

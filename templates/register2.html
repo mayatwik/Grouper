@@ -5,30 +5,33 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/register2" method="post">
-        <h1>Register:</h1><br>
-        
-        
-        <div class="tab">
-            <p><input id="email" name="email" placeholder="E-mail..." type="text"></p>
-            <p><input id="phone" name="phone" placeholder="Phone..." type="integer"></p>
-            <p><input id="day" name="day" placeholder="dd"   type="integer"></p>
-            <p><input id="month" name="month" placeholder="mm"  type="integer"></p>
-            <p><input id="year" name="year" placeholder="yyyy" type="integer"></p>
+<form action="/register2" method="post">
+    <h1>Register:</h1><br>
+    <!-- One "tab" for each step in the form: -->
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="Harvard_id" name="Harvard_id" placeholder="Harvard Student id" type="number">
         </div>
-
-        <div class="tab">
-            <p><input type="integer" id="password" name="password" placeholder="Password..." ></p>
-            <p><input type="integer" id="confirmation" name="confirmation" placeholder="Password Confirmation"></p>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email adresse" type="text">
         </div>
-        
-        <button type="submit" class="btn success">Next</button>
-        
+        <div class="mb-3">
+            <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="phone" name="phone" placeholder="Phone Number" type="number">
+        </div>
+        <div class="mb-3">
+            <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="birthday" name="birthday" placeholder="birthday" type="date">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirmation" type="password">
+        </div>
+    
 
-        <br><br>
-        <h6>Do you have an acoount?</h6>
-        <a class="nav-link" href="/login">Login</a>
-    </form>
+        <button class="btn btn-primary" type="submit">Next</button>
+    
+</form>
+
 
 
 {% endblock %}

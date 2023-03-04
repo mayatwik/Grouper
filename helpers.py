@@ -5,6 +5,16 @@ import urllib.parse
 from flask import redirect, render_template, request, session
 from functools import wraps
 
+def blob(filename):
+    # Convert digital data to binary format
+    with open(filename, 'rb') as file:
+        blobData = file.read()
+    return blobData
+
+def convert(b):
+    with open(b, "rb") as file:
+        file = file.read()
+    return file
 
 def apology(message, code=400):
     """Render message as an apology to user."""
