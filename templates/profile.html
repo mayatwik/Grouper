@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+
+    <h1> Profile </h1>
+    <img src="static/images/{{ image }}" alt="...">
+    <h2> {{ first_name }} {{ last_name }} </h2>
+    <h2> birthday: {{ birthday }} </h2>
+
+{% endblock %}

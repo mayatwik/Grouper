@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block main %}
+    <form action="/create" method="post">
+        <h1>creating a new event</h1>
+        <input type="text" placeholder="Title"name="title"></input>
+        <input type="date" placeholder="Date" name="date"></input>
+        <input type="time" placeholder="Hour" name="hour"></input>
+        <input type="text" placeholder="More Details"name="details"></input>
+        <input type="text" placeholder="Location" name="location"></input>
+        <h3>if there is any:</h3>
+        <input type="text" placeholder="Another" name="another"></input>
+        <input type="text" placeholder="Limit Number Of People" name="limit"></input>
+        <input type="number" placeholder="Price" name="price"></input>
+        <input type="submit">
+    </form>
+{% endblock %}

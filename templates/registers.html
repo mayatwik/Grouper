@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Registers
+{% endblock %}
+    
+{% block main %}
+    {% for register in registers %}
+        <h1>{{ register.title }}</h1>
+        <h1>{{ register.date }}</h1>
+        <h1>{{ register.details }}</h1>
+        <h1>{{ register.location }}</h1>
+
+        <br><br><br>
+    {% endfor %}
+
+{% endblock %}

@@ -10,6 +10,7 @@ from datetime import date
 import requests 
 import shutil
 import pathlib
+from bs4 import BeautifulSoup
 
 from helpers import apology, login_required, blob, convert
 
@@ -38,12 +39,93 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    session["image"] = 'Yes'
-    return render_template("homepage.html")
+    if request.method == "POST":
+        id_event = request.form.get("event_id")
+        event = db.execute("SELECT * FROM events WHERE id = ?", id_event)
+        id_person = db.execute("SELECT id FROM users WHERE passport = ?", int(session.get("passport")))[0]["id"]
+        registers = db.execute("SELECT id_person FROM registers WHERE id_event = ?", id_event)
+        print(registers)
+        for register in registers:
+            if register["id_person"] ==  id_person:
+                return apology("I'm sorry, you have already registered to that event! see you there!")
+        if event[0]["people_number"]:
+            limit = event[0]["people_number"]
+            amount = db.execute("SELECT COUNT(*) FROM registers JOIN events ON events.id = registers.id_event WHERE id = ?", id_event)[0]["COUNT(*)"]
+            if int(limit) == int(amount):
+                return apology("all the places are taken! sorry! :(")
+        db.execute("INSERT INTO registers (id_person, id_event) VALUES (?,?)", id_person, id_event)
+        return apology("you are register now")
 
+        return rendirect("/event", id = id)
+    else:
+        registers = []
+        id_person = db.execute("SELECT id FROM users WHERE passport = ?", int(session.get("passport")))[0]["id"]
+        print(id_person)
+        registers_fake = db.execute("SELECT id_event FROM registers WHERE id_person = ?", id_person)
+        for register in registers_fake:
+            registers.append(str(register["id_event"]))
+        print(registers)
+        events = db.execute("SELECT * FROM events")
+        return render_template("homepage.html", events=events, registers=registers)
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    if request.method == "POST":
+        return apology("")
+    else:
+        person = db.execute("SELECT * FROM users WHERE passport = ?", int(session.get("passport")))
+        image = db.execute("SELECT file FROM users WHERE passport = ?", int(session.get("passport")))[0]["file"]
+         
+        return render_template("profile.html", first_name = person[0]["first_name"], last_name = person[0]["last_name"],
+        birthday = person[0]["birthday"], image = image)
+
+@app.route("/registers", methods=["GET", "POST"])
+@login_required
+def registers():
+    if request.method == "POST":
+        return apology("")
+    else:
+        id = db.execute("SELECT id FROM users WHERE passport = ?", session.get("passport"))[0]["id"]
+        registers = db.execute("SELECT * FROM registers JOIN events ON registers.id_event = events.id WHERE id_person = ?", id)
+        return render_template("registers.html", registers = registers)
+
+@app.route("/event", methods=["GET"])
+@login_required
+def event():
+    return render_template("event.html")
+    
+@app.route("/create", methods=["GET", "POST"])
+@login_required
+def create():
+    if request.method == "POST":
+        # Ensure title was submitted
+        if not request.form.get("title"):
+            return apology("must provide title", 403)
+
+        # Ensure date was submitted
+        elif not request.form.get("date"):
+            return apology("must provide date", 403)
+
+        # Ensure details was submitted
+        elif not request.form.get("details"):
+            return apology("must provide location", 403)
+
+        # Ensure location was submitted
+        elif not request.form.get("location"):
+            return apology("must provide location", 403)
+
+        db.execute("INSERT INTO events (title, location, details, date, price, people_number, another, hour) VALUES (?,?,?,?,?,?,?,?)", 
+        request.form.get("title"), request.form.get("location"), request.form.get("details"), request.form.get("date"),request.form.get("price"),
+        request.form.get("limit"), request.form.get("another"), request.form.get("hour"))
+
+
+        return redirect("/")
+    else:
+        return render_template("create.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -75,10 +157,10 @@ def login():
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["passport"] = rows[0]["passport"]
         session["first_name"] = rows[0]["first_name"]
         session["last_name"] = rows[0]["last_name"]
-
+        session["image"] = 'Yes'
         # Redirect user to home page
         return redirect("/")
 
@@ -190,6 +272,16 @@ def register3():
         return redirect('/')
     else:
         return render_template("register3.html")
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
 
 
 if __name__ == '__main__':
