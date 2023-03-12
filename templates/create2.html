@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block main %}
+    <form action="/create2" method="post" enctype="multipart/form-data">
+        <h1>Adding a photo to the event!</h1>
+        <div class="mb-3">
+            <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="file" name="file" type="file" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Next</button>
+{% endblock %}

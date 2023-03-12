@@ -5,30 +5,71 @@
 {% endblock %}
 
 {% block main %}
-<br><h1>lets find you a new group!</h1><br>
-<div class="row row-cols-md-2 row-cols-md-3 g-4">
-    {% for event in events %}
-    <div class="col">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h3 class="card-title">{{ event.title }}</h3>
-          <p class="card-text">
-          <h4>{{ event.details }}</h4>
-          <h4>{{ event.date }} {{ event.hour }}</h4>
-          <form action="/" method="post" onsubmit="return myFunction()">
-            <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
-            {% set event_id = event.id | string() %}
-            {% if event_id in registers %}
-              <button class="btn btn-primary" type="submit">Can't wait!</button>
-            {% else %}
-              <button class="btn btn-primary" type="submit">Register</button>
-            {% endif %}
-          </form>
-          </p>
-        </div>
-      </div>
-    {% endfor %}
-    
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="row row-cols-0 row-cols-md-2 g-0">
+  {% for event in events %}
+  <div class="col">
+
+<div id="container">	
+	
+	<div class="product-details">
+	<div class="card-body">
+      <h1>{{ event.title }}</h1>
+          <p class="information">{{ event.details }}</p>
+      <form action="/" method="post">
+        <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
+    {% set event_id = event.id | string() %}
+          {% if event_id in registers %}
+          
+            <button type="submit" style="background-color:rgb(0, 33, 249);">
+              <i aria-hidden="true"></i><span class="buy"></span>I Can't wait!</button>
+          {% else %}
+            <button type="submit">
+              <i aria-hidden="true"></i>
+              <span class="buy">Register</button>
+          {% endif %}
+      </form>
+    </div>
+	
+
+			
+</div>
+	
+<div class="product-image">
+	
+	<img src="static/images/{{ event.file }}" alt="...">
+	
+
+<div class="info">
+  <br><br>
+	<h2> Details</h2>
+	<ul>
+		<li><strong>Date: </strong>{{ event.date }}</li>
+		<li><strong>Location: </strong>{{ event.location }}</li>	
+    {% if event.another %}
+    <li><strong>Another: </strong>{{ event.another }}</li>	
+    {% endif %}
+    {% if event.price %}
+    <li><strong>Price: </strong>{{ event.price }}$</li>	
+    {% endif %}
+    {% if event.people_number  %}
+    <li><strong>Limit: </strong>{{ event.people_number }} people</li>	
+    {% endif %}
+    {% set number %}
+        {{ event.passport | int }}
+    {% endset %}
+    <form action="/profile2" method="POST">
+      <input type="hidden" id="passport" name="passport" value="{{ event.passport }}"/>
+      <button type="submit" class="submitprofile" style="background-color: black;">Creator</button>
+    </form>
+	</ul>
+</div>
+</div>
+</div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

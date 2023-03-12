@@ -5,13 +5,50 @@
 {% endblock %}
     
 {% block main %}
-    {% for register in registers %}
-        <h1>{{ register.title }}</h1>
-        <h1>{{ register.date }}</h1>
-        <h1>{{ register.details }}</h1>
-        <h1>{{ register.location }}</h1>
+    <h3>There are all of the events you have registered and look forward them!!</h3>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <br><br><br>
-    {% endfor %}
+<div class="row row-cols-0 row-cols-md-2 g-0">
+    {% for register in registers %}
+
+  <div class="col">
+
+<div id="container">	
+	
+	<div class="product-details">
+	<div class="card-body">
+      <h1>{{ register.title }}</h1>
+          <p class="information">{{ register.details }}</p>
+      </form>
+    </div>
+    <form action="/registers" method="post">
+      <input type="hidden" id="event_id" name="event_id" value="{{ register.id }}"/>
+      <button type="submit" style="background-color:rgb(197, 11, 11);">
+        <i aria-hidden="true"></i><span class="buy"></span>Delete me:(</button>
+    </form>
+
+	
+
+			
+</div>
+	
+<div class="product-image">
+	
+	<img src="static/images/{{ register.file }}" alt="...">
+	
+
+<div class="info">
+  <br><br>
+	<h2> Details</h2>
+	<ul>
+		<li><strong>Date: </strong>{{ register.date }}</li>
+		<li><strong>Location: </strong>{{ register.location }}</li>	
+	</ul>
+</div>
+</div>
+</div>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock %}

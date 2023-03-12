@@ -57,37 +57,50 @@ def index():
             if int(limit) == int(amount):
                 return apology("all the places are taken! sorry! :(")
         db.execute("INSERT INTO registers (id_person, id_event) VALUES (?,?)", id_person, id_event)
-        return apology("you are register now")
-
-        return rendirect("/event", id = id)
+        return redirect('/')
     else:
         registers = []
         id_person = db.execute("SELECT id FROM users WHERE passport = ?", int(session.get("passport")))[0]["id"]
-        print(id_person)
+
         registers_fake = db.execute("SELECT id_event FROM registers WHERE id_person = ?", id_person)
         for register in registers_fake:
             registers.append(str(register["id_event"]))
-        print(registers)
         events = db.execute("SELECT * FROM events")
         return render_template("homepage.html", events=events, registers=registers)
 
+@app.route('/profile2',  methods=["GET", "POST"])
+@login_required
+def profile2():
+    if request.method == "POST":
+        print(request.form.get("passport"))
+        person = db.execute("SELECT * FROM users WHERE passport = ?",int(request.form.get("passport")))
+        print(person)
+        image = db.execute("SELECT file FROM users WHERE passport = ?", int(request.form.get("passport")))[0]["file"]
+         
+        return render_template("profile.html", first_name = person[0]["first_name"], last_name = person[0]["last_name"],
+        birthday = person[0]["birthday"], image = str(image), bio = person[0]["bio"], gender= person[0]["gender"], country = person[0]["country"])
+    else:
+        return render_template("hopepage.html")
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     if request.method == "POST":
         return apology("")
     else:
+
         person = db.execute("SELECT * FROM users WHERE passport = ?", int(session.get("passport")))
         image = db.execute("SELECT file FROM users WHERE passport = ?", int(session.get("passport")))[0]["file"]
          
         return render_template("profile.html", first_name = person[0]["first_name"], last_name = person[0]["last_name"],
-        birthday = person[0]["birthday"], image = image)
+        birthday = person[0]["birthday"], image = image, bio = person[0]["bio"], gender= person[0]["gender"], country = person[0]["country"])
 
 @app.route("/registers", methods=["GET", "POST"])
 @login_required
 def registers():
     if request.method == "POST":
-        return apology("")
+        id = db.execute("SELECT id FROM users WHERE passport = ?", session.get("passport"))[0]["id"]
+        db.execute("DELETE FROM registers WHERE id_event = ? AND id_person = ?", request.form.get("event_id"), id)
+        return redirect("/registers")
     else:
         id = db.execute("SELECT id FROM users WHERE passport = ?", session.get("passport"))[0]["id"]
         registers = db.execute("SELECT * FROM registers JOIN events ON registers.id_event = events.id WHERE id_person = ?", id)
@@ -118,14 +131,29 @@ def create():
         elif not request.form.get("location"):
             return apology("must provide location", 403)
 
-        db.execute("INSERT INTO events (title, location, details, date, price, people_number, another, hour) VALUES (?,?,?,?,?,?,?,?)", 
+        db.execute("INSERT INTO events (title, location, details, date, price, people_number, another, hour, passport) VALUES (?,?,?,?,?,?,?,?,?)", 
         request.form.get("title"), request.form.get("location"), request.form.get("details"), request.form.get("date"),request.form.get("price"),
-        request.form.get("limit"), request.form.get("another"), request.form.get("hour"))
+        request.form.get("limit"), request.form.get("another"), request.form.get("hour"),int(session.get("passport")))
+        session["last_event"] = db.execute("SELECT id FROM events")[-1]["id"]
+        return redirect("/create2")
+    else:
+        return render_template("create.html")
 
+@app.route("/create2", methods=["GET", "POST"])
+@login_required
+def create2():
+    if request.method == "POST":
+        file = request.files['file']
+        if file.filename == '':
+            return apology("No image selected")
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        db.execute("UPDATE events SET file = ? WHERE id = ?", filename, int(session.get("last_event")))
 
         return redirect("/")
     else:
-        return render_template("create.html")
+        return render_template("create2.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -269,9 +297,33 @@ def register3():
         print(session.get("passport"))
         db.execute("UPDATE users SET file = ? WHERE passport = ?", filename, int(session.get("passport")))
         session["image"] = 'Yes'
-        return redirect('/')
+        return redirect('/register4')
     else:
         return render_template("register3.html")
+
+@app.route("/register4", methods=["GET", "POST"])
+def register4():
+    if request.method == "POST":
+        # Ensure bio was submitted
+        if not request.form.get("bio"):
+            return apology("must provide bio", 403)
+
+        # Ensure phone gender was submitted
+        elif not request.form.get("gender"):
+            return apology("must provide gender", 403)
+
+        elif not request.form.get("country"):
+            return apology("must provide Country", 403)
+        
+        passport = session.get("passport")
+
+        db.execute("UPDATE users SET bio = ?", request.form.get("bio"))
+        db.execute("UPDATE users SET gender = ?", request.form.get("gender"))
+        db.execute("UPDATE users SET country = ?", request.form.get("country"))
+    
+        return redirect('/')
+    else:
+        return render_template("register4.html")
 
 @app.route("/logout")
 def logout():

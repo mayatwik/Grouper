@@ -6,16 +6,36 @@
 
 {% block main %}
         <form action="/register3" method="post" enctype="multipart/form-data">
-            <h1>Profile Photo:</h1><br>
-                <div class="mb-3">
-                    <input  autocomplete="off" autofocus class="form-control mx-auto w-auto" id="file" name="file" type="file" required>
+            <section class="vh-100 gradient-custom">
+                <div class="container py-5 h-100">
+                  <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-12 col-lg-9 col-xl-7">
+                      <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="header" style="font-size: 60px; font-weight: bold; color: #A41034;">Grouper</div>
+                            <br>
+                          <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Choose Profile Photo</h3>
+                          <form>
+              
+                            <div class="row">
+                                <div class="form-outline">
+                                  <input  autocomplete="off" type="file" name="file" class="form-control form-control-lg" required />
+                                  <label class="form-label" for="file">Image</label>
+                                </div>
+              
+                              </div>
+                            <div class="mt-4 pt-2">
+                              <input class="btn btn-primary btn-lg" type="submit" value="Next" />
+                            </div>
+        
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-    
-                <button class="btn btn-primary" type="submit">Next</button>
-            
-    
-        </form>
-
+              </section>
+              
 
 
 {% endblock %}
