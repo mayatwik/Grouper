@@ -66,7 +66,8 @@ def index():
         for register in registers_fake:
             registers.append(str(register["id_event"]))
         events = db.execute("SELECT * FROM events")
-        return render_template("homepage.html", events=events, registers=registers)
+        passport = session.get("passport")
+        return render_template("homepage.html", events=events, registers=registers, passport=passport)
 
 @app.route('/profile2',  methods=["GET", "POST"])
 @login_required
@@ -81,6 +82,36 @@ def profile2():
         birthday = person[0]["birthday"], image = str(image), bio = person[0]["bio"], gender= person[0]["gender"], country = person[0]["country"])
     else:
         return render_template("hopepage.html")
+
+
+
+@app.route('/creator',  methods=["GET", "POST"])
+@login_required
+def creator():
+    if request.method == "POST":
+        details = db.execute("SELECT * FROM registers JOIN users ON users.id = registers.id_person WHERE registers.id_event = ?", request.form.get("event_id"))
+        return render_template("event.html", details=details)
+    else:
+        creator_events = db.execute("SELECT * FROM events WHERE passport = ?",int(session.get("passport")))
+         
+        return render_template("creator.html", events = creator_events)
+
+@app.route('/creator1',  methods=["GET", "POST"])
+@login_required
+def creator1():
+    if request.method == "POST":
+        db.execute("DELETE FROM events WHERE id = ?", request.form.get("event_id"))
+        creator_events = db.execute("SELECT * FROM events WHERE passport = ?",int(session.get("passport")))
+         
+        return render_template("creator.html", events = creator_events)
+    else:
+        creator_events = db.execute("SELECT * FROM events WHERE passport = ?",int(session.get("passport")))
+         
+        return render_template("creator.html", events = creator_events)
+
+
+
+
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
@@ -317,9 +348,9 @@ def register4():
         
         passport = session.get("passport")
 
-        db.execute("UPDATE users SET bio = ?", request.form.get("bio"))
-        db.execute("UPDATE users SET gender = ?", request.form.get("gender"))
-        db.execute("UPDATE users SET country = ?", request.form.get("country"))
+        db.execute("UPDATE users SET bio = ? WHERE passport = ?", request.form.get("bio"), session.get("passport"))
+        db.execute("UPDATE users SET gender = ? WHERE passport = ?", request.form.get("gender"), session.get("passport"))
+        db.execute("UPDATE users SET country = ? WHERE passport = ?", request.form.get("country"), session.get("passport"))
     
         return redirect('/')
     else:

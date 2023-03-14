@@ -19,19 +19,27 @@
 	<div class="card-body">
       <h1>{{ event.title }}</h1>
           <p class="information">{{ event.details }}</p>
-      <form action="/" method="post">
-        <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
+
     {% set event_id = event.id | string() %}
+          {% if event.passport != passport %}
+          <form action="/" method="post">
+            <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
           {% if event_id in registers %}
-          
-            <button type="submit" style="background-color:rgb(0, 33, 249);">
-              <i aria-hidden="true"></i><span class="buy"></span>I Can't wait!</button>
+            <button type="button" style="background-color:rgb(0, 33, 249);">I Can't wait!</button>
           {% else %}
             <button type="submit">
               <i aria-hidden="true"></i>
               <span class="buy">Register</button>
           {% endif %}
-      </form>
+        </form>
+        {% else %}
+        <form action="/creator" method="post">
+        <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
+        <button type="submit" style="background-color: green;"">
+          <i aria-hidden="true"></i>
+          <span class="buy">Details</button>
+        </form>
+      {% endif %}
     </div>
 	
 
@@ -44,7 +52,7 @@
 	
 
 <div class="info">
-  <br><br>
+  <br>
 	<h2> Details</h2>
 	<ul>
 		<li><strong>Date: </strong>{{ event.date }}</li>

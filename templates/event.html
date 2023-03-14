@@ -5,7 +5,31 @@
 {% endblock %}
 
 {% block main %}
-
-    <h3>some event</h3>
+<h4>Responsive Table</h4>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>gender</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for detail in details %}
+        <tr>
+            <td>{{ detail.first_name }}</td>
+            <td>{{ detail.last_name }}</td>
+            <td>{{ detail.email }}</td>
+            <td>{{ detail.phone_number }}</td>
+            <td>{{ detail.gender }}</td>
+        </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+</div>
+    
 
 {% endblock %}

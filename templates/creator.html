@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Event
+{% endblock %}
+
+{% block main %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="row row-cols-0 row-cols-md-2 g-0">
+    {% for event in events %}
+    <div class="col">
+  
+  <div id="container">	
+      
+      <div class="product-details">
+      <div class="card-body">
+        <h1>{{ event.title }}</h1>
+            <p class="information">{{ event.details }}</p>
+        <form action="/creator" method="post">
+          <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
+              <button type="submit" style="background-color: green;">
+                <i aria-hidden="true"></i><span class="buy"></span>Details</button>
+        </form>
+        <br>
+        <form action="/creator1" method="post">
+            <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}"/>
+                <button type="submit" style="background-color:red;">
+                  <i aria-hidden="true"></i><span class="buy"></span>Delete</button>
+          </form>
+      </div>       
+  </div>
+      
+  <div class="product-image">
+      
+      <img src="static/images/{{ event.file }}" alt="...">
+      
+  <div class="info">
+    <br><br>
+      <h2> Details</h2>
+      <ul>
+        <li><strong>Date: </strong>{{ event.date }}</li>
+        <li><strong>Location: </strong>{{ event.location }}</li>	
+        {% if event.another %}
+            <li><strong>Another: </strong>{{ event.another }}</li>	
+        {% endif %}
+        {% if event.price %}
+            <li><strong>Price: </strong>{{ event.price }}$</li>	
+        {% endif %}
+        {% if event.people_number  %}
+            <li><strong>Limit: </strong>{{ event.people_number }} people</li>	
+        {% endif %}
+    </ul>
+  </div>
+  </div>
+  </div>
+</div>
+  {% endfor %}
+</div>
+{% endblock %}

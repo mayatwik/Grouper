@@ -38,11 +38,24 @@
 	
 
 <div class="info">
-  <br><br>
+  <br>
 	<h2> Details</h2>
 	<ul>
 		<li><strong>Date: </strong>{{ register.date }}</li>
-		<li><strong>Location: </strong>{{ register.location }}</li>	
+		<li><strong>Location: </strong>{{ register.location }}</li>
+    {% if register.another %}
+    <li><strong>Another: </strong>{{ register.another }}</li>	
+    {% endif %}
+    {% if register.price %}
+    <li><strong>Price: </strong>{{ register.price }}$</li>	
+    {% endif %}
+    {% if register.people_number  %}
+    <li><strong>Limit: </strong>{{ register.people_number }} people</li>	
+    {% endif %}	
+    <li><form action="/profile2" method="POST">
+      <input type="hidden" id="passport" name="passport" value="{{ register.passport }}"/>
+      <button type="submit" class="submitprofile" style="background-color: black;">Creator</button>
+    </form></li>
 	</ul>
 </div>
 </div>
