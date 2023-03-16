@@ -191,7 +191,7 @@ background: white;
 	text-align: center;
 	border-radius: 5px;
 
-	margin: 5em auto;
+	margin: 2em auto;
 	height: 300px;
 	width: 600px;
   
@@ -213,11 +213,11 @@ background: white;
 }
 
 #container .product-details h1{
-	font-family: 'Bebas Neue', cursive;
+	font-family: 'EB Garamond' , cyrillic-ext;
 	display: inline-block;
 	position: relative;
 	font-size: 30px;
-	color: #553434;
+	color: #910000;
 	margin: 0;
 	
 }
@@ -479,7 +479,7 @@ font-family: 'EB Garamond', serif;
 }
 
 .title {
-    margin-top: 0px;
+    margin-top: 15px;
     margin-bottom: 25px;
     min-height: 100px;
     color: #be0f0f;

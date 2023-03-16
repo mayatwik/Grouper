@@ -65,7 +65,7 @@ def index():
         registers_fake = db.execute("SELECT id_event FROM registers WHERE id_person = ?", id_person)
         for register in registers_fake:
             registers.append(str(register["id_event"]))
-        events = db.execute("SELECT * FROM events")
+        events = db.execute("SELECT * FROM events ORDER BY id DESC")
         passport = session.get("passport")
         return render_template("homepage.html", events=events, registers=registers, passport=passport)
 
@@ -215,6 +215,7 @@ def login():
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("invalid username and/or password", 403)
 
+
         # Remember which user has logged in
         session["passport"] = rows[0]["passport"]
         session["first_name"] = rows[0]["first_name"]
@@ -249,6 +250,11 @@ def register():
         # Ensure username exists and password is correct
         if len(rows) != 1 or not rows[0]["first_name"] == request.form.get("firstname")  or not rows[0]["last_name"] == request.form.get("lastname"):
             return apology("invalid name and/or passport", 403)
+
+        persons = db.execute("SELECT * FROM users")
+        for person in persons:
+            if int(person["passport"]) == int(request.form.get("passport")):
+                return apology("Hi friend! you have already registered on the website, remember?")
 
         session["passport"] = rows[0]["passport"]
         session["first_name"] = rows[0]["first_name"]
