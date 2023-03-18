@@ -5,7 +5,7 @@ The purpose of Grouper is to create new groups, new events, new friendships, new
 All of that is inside Havrad University.
 
 Every student in Harvard can easily register for Grouper, the first step in the registration form is a full name and a passport number -  to ensure your registration and protect your money.
-In the second step in the registration form, you will need a Harvard Id number - to ensure you are a real Harvard student.
+In the second step in the registration form, you will need a Harvard Id number (to ensure you are a real Harvard student), and a little more information about you.
   
 
  <img width="500" height="300" alt="FC252513-C1C1-4899-8255-CD5F577B7633" src="https://user-images.githubusercontent.com/112487890/225670569-043c433f-5cf4-4ce9-98b6-0948f8311afb.png"> <img width="500" height="300" alt="BE442435-7D34-48B3-BBD1-F543330A30FB" src="https://user-images.githubusercontent.com/112487890/225673090-3c7c5c0b-51cc-462a-a4ba-7ba8c91baa3e.png">
